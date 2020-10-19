@@ -1,1 +1,12 @@
-//pusty
+#include <LiquidCrystal.h>              //dołączenie biblioteki
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); //stworzenie obiektu klasy LiquidCrystal
+void setup() {                                    
+    lcd.begin(16,2);                             //zainicjowanie wyświetlacza
+    lcd.print("hello world");                 //wysłanie tekstu
+}
+
+void loop() {
+    lcd.setCursor(0, 1);                      //ustawienie kursora w 2 rzędzie
+    lcd.print(millis() / 1000);               //wypisanie liczby sekund od resetu
+    delay(850);                                  // opóźnienie ;) (niekonieczne)
+}
