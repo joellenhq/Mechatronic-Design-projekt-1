@@ -1,1 +1,31 @@
-//pusty
+#include <LiquidCrystal.h>              //dołączenie biblioteki
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);    //stworzenie obiektu klasy LiquidCrystal
+
+#define TRIG 8                                 //definicja zmiennych globalnych
+#define ECHO 9
+
+void setup() {                                    
+    lcd.begin(16,2);                             //zainicjowanie wyświetlacza
+    lcd.print("aktualny pomiar");         //wysłanie tekstu
+    pinMode(TRIG,OUTPUT);               //definicja pinu zlecającego pomiar
+    pinMode(ECHO,INPUT);                //definicja pinu przesyłającego wynik
+}
+
+void loop() {
+    lcd.setCursor(0, 1);                      //ustawienie kursora w 2 rzędzie
+    float odl=pomiar();                       //deklaracja zmiennej przechowującej wynik
+    if(odl<400){                                 //sprawdzenie prawidłowości wyniku
+        lcd.print(odl);                           //wypisanie odległości na lcd
+        lcd.print("cm");
+        }
+    delay(850);                                  // opóźnienie ;) (niekonieczne)
+}
+
+float pomiar(){                                 //deklaracja funkcji wykonującej pomiar
+  unsigned long czas;                      //deklaracja zmiennej przechowującej czas impulsu pomiarowego
+  digitalWrite(TRIG,HIGH);               //wysłanie rządania pomiaru
+  delayMicroseconds(10);
+  digitalWrite(TRIG,LOW);
+  czas = pulseIn(ECHO,HIGH);        //odczyt wyniku pomiaru
+  return czas/58.00;                       //przeskalowanie na cm (dla v=340m/s)
+}
