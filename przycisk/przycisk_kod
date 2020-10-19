@@ -1,0 +1,13 @@
+void setup() {
+	pinMode(2,INPUT); //definicja wejscia z przycisku
+	pinMode(5,OUTPUT);//definicja wyjścia na LED
+	}
+
+void loop() {
+	if(digitalRead(2)==HIGH){ //warunek jeżeli wciśnięty został przycisk
+  	digitalWrite(5,HIGH);       //polecenie ustawienia stanu wysokiego
+	}
+else {
+  	digitalWrite(5,LOW);      //polecenie ustawienia stanu niskiego
+	}
+}
