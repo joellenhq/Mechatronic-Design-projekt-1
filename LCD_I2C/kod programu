@@ -1,10 +1,11 @@
 //zalaczenie odpowiednich bibliotek
-#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <Wire.h>
+
 
 
 //ustawienie adresu wyswietlacza lcd na 0x27, wyswietlane 16 znakow i dwie linie  
-LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+LiquidCrystal_I2C lcd(0x27,16,2);  
 
 //zdefiniowanie pinu odpowiadającego za przycisk
 const int buttonPin = 8;     
@@ -16,28 +17,32 @@ bool buttonState = LOW;
 //zdefiniowanie zmiennej odpowiadającej za status przycisku
 bool ledState=LOW;        
 
-//funkcja wykonywana tylko raz, przy załączeniu układu
+//funkcja wykonywana tylko raz, przy załączeniu ukladu
 void setup() {
-  //ustawienie trybu pinu odpowiadającego za diode na wyjście
+  //ustawienie trybu pinu odpowiadającego za diode na wyjscie
   pinMode(ledPin, OUTPUT);
   //ustawienie diody na stan niski, zgaszenie jej
   digitalWrite(ledPin, LOW);
-  //ustawienie trybu pinu odpowiadającego za przycisk na wyjście
+  //ustawienie trybu pinu odpowiadającego za przycisk na wyjscie
   pinMode(buttonPin, INPUT);
   //inicjalizacja wyswietlacza lcd
   lcd.init();                    
   lcd.backlight();
+  lcd.clear();
+  lcd.setCursor(1,0);
+  //wypisanie tekstu na wyswietlacz
+  lcd.print("dioda zgaszona!");
 }
 
 void loop() {
-  //zapisanie stanu pinu odpowiadającego za przycisk
+  //zapisanie stanu pinu odpowiadajacego za przycisk
   buttonState = digitalRead(buttonPin);
   
-  //sprawdzenie warunku czy przycisk jest wciśnięty
+  //sprawdzenie warunku czy przycisk jest wcisniety
   if (buttonState == HIGH) {
-    //jeśli nastąpi spełnienie warunku to wykona się zmiana stanu diody
+    //jesli nastąpi spełnienie warunku to wykona się zmiana stanu diody
     if(ledState == LOW){
-      //jeśli stan byl niski to zmieni się na wysoki, dioda się zaswieci
+      //jesli stan byl niski to zmieni się na wysoki, dioda sie zaswieci
       digitalWrite(ledPin, HIGH);
       ledState = HIGH;
       //usuniecie poprzednich napisów z wywietlacza lcd
@@ -47,10 +52,10 @@ void loop() {
       lcd.print("dioda zapalona!");
     } 
     else {
-      //jeśli stan byl wysoki to zmieni się na niski, dioda zgasnie
+      //jesli stan byl wysoki to zmieni się na niski, dioda zgasnie
       digitalWrite(ledPin, LOW);
       ledState = LOW;
-      //usuniecie poprzednich napisów z wyswietlacza lcd
+      //usuniecie poprzednich napisow z wyswietlacza lcd
       lcd.clear();
       lcd.setCursor(1,0);
       //wypisanie tekstu na wyswietlacz
