@@ -2,8 +2,6 @@
 #include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 
-
-
 //ustawienie adresu wyswietlacza lcd na 0x27, wyswietlane 16 znakow i dwie linie  
 LiquidCrystal_I2C lcd(0x27,16,2);  
 
@@ -14,7 +12,7 @@ const int ledPin =  2;
 
 //zdefiniowanie zmiennej odpowiadającej za status przycisku
 bool buttonState = LOW;
-//zdefiniowanie zmiennej odpowiadającej za status przycisku
+//zdefiniowanie zmiennej odpowiadającej za status diody
 bool ledState=LOW;        
 
 //funkcja wykonywana tylko raz, przy załączeniu ukladu
@@ -23,7 +21,7 @@ void setup() {
   pinMode(ledPin, OUTPUT);
   //ustawienie diody na stan niski, zgaszenie jej
   digitalWrite(ledPin, LOW);
-  //ustawienie trybu pinu odpowiadającego za przycisk na wyjscie
+  //ustawienie trybu pinu odpowiadającego za przycisk na wejscie
   pinMode(buttonPin, INPUT);
   //inicjalizacja wyswietlacza lcd
   lcd.init();                    
@@ -34,6 +32,7 @@ void setup() {
   lcd.print("dioda zgaszona!");
 }
 
+//funkcja wykonywana w petli, do wylaczenia ukladu
 void loop() {
   //zapisanie stanu pinu odpowiadajacego za przycisk
   buttonState = digitalRead(buttonPin);
