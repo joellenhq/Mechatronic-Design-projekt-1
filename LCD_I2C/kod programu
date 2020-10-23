@@ -1,0 +1,63 @@
+//zalaczenie odpowiednich bibliotek
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+
+
+//ustawienie adresu wyswietlacza lcd na 0x27, wyswietlane 16 znakow i dwie linie  
+LiquidCrystal_I2C lcd(0x27,16,2);  // set the LCD address to 0x27 for a 16 chars and 2 line display
+
+//zdefiniowanie pinu odpowiadającego za przycisk
+const int buttonPin = 8;     
+//zdefiniowanie pinu odpowiadającego za diode
+const int ledPin =  2;      
+
+//zdefiniowanie zmiennej odpowiadającej za status przycisku
+bool buttonState = LOW;
+//zdefiniowanie zmiennej odpowiadającej za status przycisku
+bool ledState=LOW;        
+
+//funkcja wykonywana tylko raz, przy załączeniu układu
+void setup() {
+  //ustawienie trybu pinu odpowiadającego za diode na wyjście
+  pinMode(ledPin, OUTPUT);
+  //ustawienie diody na stan niski, zgaszenie jej
+  digitalWrite(ledPin, LOW);
+  //ustawienie trybu pinu odpowiadającego za przycisk na wyjście
+  pinMode(buttonPin, INPUT);
+  //inicjalizacja wyswietlacza lcd
+  lcd.init();                    
+  lcd.backlight();
+}
+
+void loop() {
+  //zapisanie stanu pinu odpowiadającego za przycisk
+  buttonState = digitalRead(buttonPin);
+  
+  //sprawdzenie warunku czy przycisk jest wciśnięty
+  if (buttonState == HIGH) {
+    //jeśli nastąpi spełnienie warunku to wykona się zmiana stanu diody
+    if(ledState == LOW){
+      //jeśli stan byl niski to zmieni się na wysoki, dioda się zaswieci
+      digitalWrite(ledPin, HIGH);
+      ledState = HIGH;
+      //usuniecie poprzednich napisów z wywietlacza lcd
+      lcd.clear();
+      lcd.setCursor(1,0);
+      //wypisanie tekstu na wyswietlacz
+      lcd.print("dioda zapalona!");
+    } 
+    else {
+      //jeśli stan byl wysoki to zmieni się na niski, dioda zgasnie
+      digitalWrite(ledPin, LOW);
+      ledState = LOW;
+      //usuniecie poprzednich napisów z wyswietlacza lcd
+      lcd.clear();
+      lcd.setCursor(1,0);
+      //wypisanie tekstu na wyswietlacz
+      lcd.print("dioda zgaszona!");
+    }
+  //opoznienie trwajace pol sekundy, aby dioda nie migala w czasie wciskania przycisku
+  delay(500);
+  }
+
+}
