@@ -14,7 +14,6 @@ void rozwiaz( float a, float b, char dzialanie)
     float wynik;
     switch (dzialanie)
     {
-
     case '+': 
     wynik = a + b;
     Serial.print("Wynik a + b = ");
