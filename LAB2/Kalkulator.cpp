@@ -85,6 +85,5 @@ void loop()
   {
     rozwiaz (a,b,dzialanie);
       
-  }
-     
+  }    
 }
